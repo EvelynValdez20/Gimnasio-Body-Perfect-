@@ -1,0 +1,168 @@
+
+create table Cliente (
+   Cli_ID               INT primary key           not null,
+   NOMBRE           CHAR(25)            not null,
+   APELLIDO         CHAR(15)            not null,
+   TELEFONO         INT                 not null,
+   DIRECCION        Varchar(50)         not null,
+   HORAINGRESO       time                not null,
+   FECHAINSCRIPCION  VARCHAR(100) 	    not null
+);
+
+create table provedor (
+	pro_ID int primary key not null,
+	nombre char (25) not null,
+	direccion  varchar(20)not null,
+	telefono int not null
+);
+create table administrador (
+	adm_ID int primary key not null,
+	nombre char(50) not null,
+    apellido char(50)not null,
+	ingresolaboral money not null,
+	direccion varchar(100) not null
+);
+create table producto (
+	pro_ID int primary key not null,
+	nombre char(50) not null,
+	stock varchar (100) not null,
+	precio  money not null,
+	felaboracion date not null,
+	fvencimiento date not null
+);
+create table entrenador (
+	entre_ID int primary key not null,
+	nombre char(25) not null,
+	apellido char(20) not null,
+	direccion varchar(50) not null,
+	telefono int not null,
+	ingresolaboral int not null
+);
+create table gimnasio (
+	gim_Ruc int primary key not null,
+	nombre char(25) not null,
+	horarios time not null,
+	direccion varchar(50) not null
+);
+create table menbresia (
+	men_ID int primary key not null,
+	Cli_ID int not null,
+	tipo char (50) not null,
+	constraint FK_cli_ID Foreign key (Cli_ID)references Cliente (Cli_ID)
+);
+create table horariomanana (
+	hm_ID int primary key not null,
+	Cli_ID int not null,
+	entre_ID int not null,
+	adm_ID int not null,
+	constraint FK_cli_ID Foreign key (Cli_ID)references Cliente (Cli_ID),
+	constraint FK_entre_ID Foreign key (entre_ID)references entrenador (entre_ID),
+	constraint FK_adm_ID Foreign key (adm_ID)references administrador (adm_ID)
+);
+create table horariotarde (
+	ht_ID int primary key not null,
+	Cli_ID int not null,
+	entre_ID int not null,
+	adm_ID int not null,
+	constraint FK_cli_ID Foreign key (Cli_ID)references Cliente (Cli_ID),
+	constraint FK_entre_ID Foreign key (entre_ID)references entrenador (entre_ID),
+	constraint FK_adm_ID Foreign key (adm_ID)references administrador (adm_ID)
+);
+create table factura (
+	fac_ID int primary key not null,
+	detalle varchar (25) not null,
+	fecha date not null,
+	cli_ID int not null,
+	adm_ID int not null,
+	gim_Ruc int not null,
+	pro_ID int not null,
+	constraint FK_cli_ID Foreign key (Cli_ID)references Cliente (Cli_ID),
+	constraint FK_gim_Ruc Foreign key (gim_Ruc)references gimnasio (gim_Ruc),
+	constraint FK_adm_ID Foreign key (adm_ID)references administrador (adm_ID),
+	constraint FK_pro_ID Foreign key (pro_ID)references producto (pro_ID)
+);
+select *from factura
+insert into Cliente values (1,'Bryan','Arteaga',099577842,'Manta','17:30:22','17/02/2020')
+insert into Cliente values (2,'Cesar','Alcivar',098754623,'Santa Elena','16:54:45','15/01/2014')
+insert into Cliente values (3,'Tatiana','Beltran',0985476487,'Santa Lucia','14:05:41','14/45/2015')
+insert into Cliente values (4,'Michelle','Mendoza',0984489321,'Santa Ana','10:15:45','18/05/2016')
+insert into Cliente values (5,'Roberta','Arteaga',0974252135,'Chone','14:05:41','14/45/2015')
+insert into Cliente values (6,'Patricio','Valdez',0965621546,'Flavio','14:05:41','14/45/2015')
+insert into Cliente values (7,'Belen','Paez',0985421321,'Carmen','14:05:41','14/45/2015')
+insert into Cliente values (8,'Efren','Espinoza',0977445623,'Santo Domingo','14:05:41','14/45/2015')
+insert into Cliente values (9,'Jose','Perez',0958632152,'Quito','14:05:41','14/45/2015')
+insert into Cliente values (10,'Diana','Chavez',0998542123,'Sangolqui','14:05:41','14/45/2015')
+
+insert into provedor values (1,'Erika','Chone','0988890989')
+insert into provedor values (2,'Belen','Chone','0988890989')
+insert into provedor values (3,'Maximiliano','Manta','0988845989')
+insert into provedor values (4,'Ronaldo','Quito','0984590989')
+insert into provedor values (5,'Roberta','Sangolqui','0954890989')
+insert into provedor values (6,'Efren','Santo Domingo','0981450989')
+insert into provedor values (7,'Diana','Cuba','0947190989')
+insert into provedor values (8,'Jose','Chone','0984726989')
+insert into provedor values (9,'Cesar','Santa Elena','0988470989')
+insert into provedor values (10,'Bryan','Jocay','098854789')
+
+insert into administrador values (1,'Max','Cedeño',50,'Jocay')
+insert into administrador values (2,'Belen','Castro',75,'Valle nuevo')
+insert into administrador values (3,'Cesar','Cantos',60,'Chone')
+insert into administrador values (4,'Efren','Espinoza',35,'Quito')
+
+insert into producto values (1,'proteina','10',45,'19/01/2017','19/01/2022')
+insert into producto values (2,'proteina','10',45,'19/01/2012','19/01/2022')
+insert into producto values (3,'pastillas','20',55,'14/1/2020','19/01/2005')
+insert into producto values (4,'aguas','25',1.20,'18/01/2019','19/01/2011')
+insert into producto values (5,'espirulina','7',25,'17/01/2016','19/01/2012')
+insert into producto values (6,'camisas','20',15,'15/01/2018','19/01/2010')
+insert into producto values (7,'termos','50',10,'10/01/2015','19/01/2013')
+
+insert into entrenador values (1,'Ivan','Sanchez','Cuenca',0987472159,20)
+insert into entrenador values (2,'Pedro','Valdez','Chone',094124159,40)
+insert into entrenador values (3,'Andres','Cepeda','Quito',0981472159,30)
+insert into entrenador values (4,'Pablo','Teran','Santo Domingo',0945772159,25)
+
+insert into gimnasio values (1,'Pedro','18:30','Manta')
+insert into gimnasio values (2,'Cesar','18:30','Manta')
+insert into gimnasio values (3,'Betty','09:10','Santa Elena')
+insert into gimnasio values (4,'Maximiliano','15:25','Quito')
+insert into gimnasio values (5,'Pablo','10:45','Santa Elena')
+insert into gimnasio values (6,'Pedro','14:01','Sangolqui')
+
+insert into menbresia values (1,1,'economica')
+insert into menbresia values (2,2,'economica')
+insert into menbresia values (3,3,'sencilla')
+insert into menbresia values (4,4,'VIP')
+insert into menbresia values (5,5,'economica')
+insert into menbresia values (6,6,'VIP')
+insert into menbresia values (7,7,'economica')
+
+insert into horariomanana values (1,1,1,1)
+insert into horariomanana values (2,2,2,2)
+insert into horariomanana values (3,3,3,3)
+insert into horariomanana values (4,4,4,4)
+
+insert into horariotarde values (1,1,1,1)
+insert into horariotarde values (2,2,2,2)
+insert into horariotarde values (3,3,3,3)
+insert into horariotarde values (4,4,4,4)
+
+insert into factura values (1,'pagodelmes','14/04/2018',1,1,1,1)
+insert into factura values (2,'pagodelmes','14/06/2018',2,2,2,2)
+insert into factura values (3,'pagosemanal','11/05/2018',3,3,3,3)
+insert into factura values (4,'pagodedia','03/10/2018',4,4,4,4)
+
+Select cliente.nombre, cliente.horaingreso from  cliente where (horaingreso > '12:00:00')
+
+SELECT nombre, COUNT (producto.nombre) AS CANTIDAD 
+FROM producto
+GROUP BY producto.nombre
+order by CANTIDAD
+
+select cliente.nombre,  producto.nombre from cliente 
+inner join factura ON cliente.cli_id = factura.cli_id 
+inner join producto on factura.pro_id= producto.pro_id
+
+select entrenador.nombre from entrenador
+inner join horariomanana ON entrenador.entre_id = horariomanana.entre_id
+
